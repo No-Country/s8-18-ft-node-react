@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/No-Country/s8-18-ft-node-react/issues"
   },
-  "homepage": "https://github.com/No-Country/s8-18-ft-node-react#readme"
+  "homepage": "https://github.com/No-Country/s8-18-ft-node-react#readme",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
 }
