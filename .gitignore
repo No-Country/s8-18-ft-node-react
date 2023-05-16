@@ -13,3 +13,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# API
+api/.env
+api/node_modules/
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
