@@ -19,6 +19,7 @@ dist-ssr
 api/.env
 api/node_modules/
 .env*
+!.env-example
 .flaskenv*
 !.env.project
 !.env.vault
