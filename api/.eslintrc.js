@@ -8,6 +8,7 @@ module.exports = {
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
+    sourceType: 'module'
   },
   ignorePatterns: [
     '/database/config/config.js',

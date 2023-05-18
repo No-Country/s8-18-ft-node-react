@@ -9,7 +9,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:client": "npm run dev --workspace=client"
+    "dev:client": "npm run dev --workspace=client",
+    "dev:server": "npm run dev --workspace=api",
+    "migrate": "npm run migrate --workspace=api"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/No-Country/s8-18-ft-node-react/issues"
   },
-  "homepage": "https://github.com/No-Country/s8-18-ft-node-react#readme"
+  "homepage": "https://github.com/No-Country/s8-18-ft-node-react#readme",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
 }
