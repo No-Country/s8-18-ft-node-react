@@ -1,4 +1,4 @@
 {
-  "./api/src/**/*.{ts, tsx}": ["eslint"],
-  "./client/src/**/*.{ts, js}": ["eslint"]
+  "client/**/*.{js,ts,tsx}": ["eslint --fix"],
+  "api/**/*.{js,ts,tsx}": ["eslint --fix"],
 }
