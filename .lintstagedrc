@@ -1,0 +1,4 @@
+{
+  "client/**/*.{js,ts,tsx}": ["eslint"],
+  "api/**/*.{js,ts,tsx}": ["eslint"],
+}
