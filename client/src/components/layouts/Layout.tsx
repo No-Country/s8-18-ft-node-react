@@ -17,7 +17,7 @@ const Layout: FC<PropsWithChildren<Props>> = ({ title, description, children }) 
           <header>
             <ProfileBar />
           </header>
-          <main>{children}</main>
+          <main className='px-5'>{children}</main>
         </div>
       </div>
     </>
