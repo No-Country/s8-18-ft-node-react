@@ -26,3 +26,6 @@ api/node_modules/
 
 # Postgres data folder
 postgres
+
+# jest
+.tmp

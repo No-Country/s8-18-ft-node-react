@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:14.3
+    restart: always
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env/db
+    container_name: inventoryDB
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+  testdb:
+    image: postgres:14.3
+    restart: always
+    ports:
+      - '5433:5432'
+    env_file:
+      - .env/db.test
+    container_name: testDB
