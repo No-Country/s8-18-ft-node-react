@@ -18,7 +18,15 @@ export class PostgresUserRepository implements UserRepository {
   }
 
   async create(userCreate: UserCreate) {
-    const newUser = await prisma.users.create({ data: { ...userCreate } })
+    const newUser = await prisma.users.create({
+      data: {
+        first_name: userCreate.firstName,
+        phone_number: userCreate.phone,
+        password: userCreate.password,
+        last_name: userCreate.lastName,
+        email: userCreate.email,
+      },
+    })
 
     return newUser
   }

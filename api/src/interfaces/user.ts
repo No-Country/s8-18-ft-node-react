@@ -7,9 +7,9 @@ export interface User {
 }
 
 export interface UserCreate {
-  first_name: string
-  last_name: string
+  firstName: string
+  lastName: string
   email: string
-  phone_number: number
+  phone: number
   password: string
 }
