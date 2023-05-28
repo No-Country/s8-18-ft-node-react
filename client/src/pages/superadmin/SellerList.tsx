@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Table, {Column} from './ui/Table'
+import Table, {Column} from '../../components/ui/Table'
 import { ArrowsPointingOutIcon, PlusIcon } from '@heroicons/react/20/solid';
 
 interface User {
@@ -46,11 +46,11 @@ const AdminList: FC = () => {
   return (
     <>
     <section className="min-w-full pb-5 shadow-lg">
-      <div className="bg-gray-100 flex justify-between py-2 px-5">
+      <div className="bg-[ECECEC] flex justify-between py-2 px-5">
         <p className="font-semibold">Cuentas de administradores</p>
         <ArrowsPointingOutIcon className="h-6 w-6" />
       </div>
-      <button className="bg-gray-100 flex py-2 px-5 my-5 ml-5 rounded-md">
+      <button className="bg-[234B99] flex py-2 px-5 my-5 ml-5 rounded-md">
         <PlusIcon className="w-6 mr-2" />
         Añadir cuenta
       </button>
