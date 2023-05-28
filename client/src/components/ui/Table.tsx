@@ -1,5 +1,7 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid'
-import React from 'react'
+import React, { useState } from 'react'
+import DeleteModal from '../../pages/superadmin/DeleteModal'
+import { EditModal } from '../../pages/superadmin/EditModal'
 
 export interface Column<T> {
   key: keyof T & string
@@ -10,18 +12,28 @@ export interface Column<T> {
 interface TableProps<T> {
   data: T[]
   columns: Column<T>[]
-  onEdit?: (item: T) => void
-  onDelete?: (item: T) => void
   showActions?: boolean
 }
 
 const Table2 = <T extends Record<string, unknown>>({
   data,
   columns,
-  onEdit,
-  onDelete,
   showActions = true,
 }: TableProps<T>) => {
+  const [modalEdit, setModalEdit] = useState(false)
+  const [modalDelete, setModalDelete] = useState<boolean>(false)
+  const [selectedItem, setSelectedItem] = useState<T | null>(null)
+
+  const handleEdit = (item: T) => {
+    setSelectedItem(item)
+    setModalEdit(true)
+  }
+
+  const handleDelete = (item: T) => {
+    setSelectedItem(item)
+    setModalDelete(true)
+  }
+
   return (
     <>
       <div className="px-5 overflow-x-auto">
@@ -30,7 +42,7 @@ const Table2 = <T extends Record<string, unknown>>({
             <tr>
               {columns.map((column) => (
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-[#606060] uppercase tracking-wider"
                   key={column.key}
                 >
                   {column.label}
@@ -43,7 +55,7 @@ const Table2 = <T extends Record<string, unknown>>({
               )}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-gray-200 text-[#606060]">
             {data.map((item) => (
               <tr key={item.id as React.Key}>
                 {columns.map((column) => (
@@ -59,13 +71,13 @@ const Table2 = <T extends Record<string, unknown>>({
                     )}
                   </td>
                 ))}
-                {showActions && onEdit && onDelete && (
+                {showActions && (
                   <td className="px-6 py-4 flex gap-2">
-                    <button onClick={() => onEdit(item)} className="text-gray-500">
+                    <button onClick={() => handleEdit(item)} className="text-[#35E871]">
                       <PencilSquareIcon className="h-6 w-6" />
                       {''}
                     </button>
-                    <button onClick={() => onDelete(item)} className="text-gray-500">
+                    <button onClick={() => handleDelete(item)} className="text-[#FF0000]">
                       <TrashIcon className="h-6 w-6" />
                       {''}
                     </button>
@@ -76,6 +88,10 @@ const Table2 = <T extends Record<string, unknown>>({
           </tbody>
         </table>
       </div>
+      {modalEdit && <EditModal setModalEdit={setModalEdit} item={selectedItem} />}
+      {modalDelete && (
+        <DeleteModal onDelete={handleDelete} setModalDelete={setModalDelete} item={selectedItem} />
+      )}
     </>
   )
 }
