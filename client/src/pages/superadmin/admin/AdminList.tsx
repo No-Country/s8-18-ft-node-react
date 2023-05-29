@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import Table, {Column} from '../../components/ui/Table'
+import Table, {Column} from '../../../components/ui/Table'
 import { ArrowsPointingOutIcon, PlusIcon } from '@heroicons/react/20/solid';
 import {AddModal} from './AddModal';
 

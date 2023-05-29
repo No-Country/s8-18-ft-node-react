@@ -1,7 +1,7 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid'
 import React, { useState } from 'react'
-import DeleteModal from '../../pages/superadmin/admin/DeleteModal'
-import { EditModal } from '../../pages/superadmin/admin/EditModal'
+import DeleteModal from '../../pages/superadmin/seller/DeleteModal'
+import { EditModal } from '../../pages/superadmin/seller/EditModal'
 
 export interface Column<T> {
   key: keyof T & string
