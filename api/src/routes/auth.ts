@@ -1,12 +1,16 @@
 import express from 'express'
 
-import { AuthController } from '../controllers'
-import { validate } from '../middlewares/validationMiddleware'
+import { authController } from '../controllers'
+import { validate } from '../middlewares/validation.middleware'
 import { userCreateSchema } from '../schemas'
 
 const router = express.Router()
-const authController = new AuthController()
 
-router.post('/auth/signup', validate('body', userCreateSchema), authController.signup)
+router.post(
+  '/auth/signup',
+  validate('body', userCreateSchema),
+  authController.signup.bind(authController),
+)
+router.post('/auth/login', authController.login.bind(authController))
 
 export default router

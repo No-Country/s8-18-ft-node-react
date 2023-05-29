@@ -1,9 +1,18 @@
 export interface User {
   id: string
-  first_name: string
-  last_name: string
+  firstName: string
+  lastName: string
   email: string
-  phone_number: number
+  phone: number
+  password: string
+}
+
+export interface AuthUser {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  phone: number
 }
 
 export interface UserCreate {
@@ -13,3 +22,5 @@ export interface UserCreate {
   phone: number
   password: string
 }
+
+export interface UserSearch extends Partial<User> {}

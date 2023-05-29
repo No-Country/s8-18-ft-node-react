@@ -1,23 +1,26 @@
 import { UserRepository, getUserRepository } from '../repositories/user.repository'
-import { AuthService } from './auth.service'
 
 import { UserCreate } from '../interfaces/user'
 
-class UserService {
-  constructor(
-    private readonly userRepository: UserRepository,
-    private readonly authService: AuthService,
-  ) {}
+export class UserService {
+  constructor(private readonly userRepository: UserRepository) {}
 
   async create(userCreate: UserCreate) {
-    // hash password
-    const { password, ...userData } = userCreate
-    const hashedPassword = await this.authService.hashPassword(password)
-
-    const newUser = await this.userRepository.create({ password: hashedPassword, ...userData })
+    const newUser = await this.userRepository.create(userCreate)
 
     return newUser
   }
+
+  async findByEmail(email: string) {
+    const user = await this.userRepository.findOne({ email })
+    return user
+  }
+
+  async emailIsAvailable(email: string) {
+    const user = await this.userRepository.findOne({ email })
+    return !user
+  }
 }
 
-export const userService = new UserService(getUserRepository(), new AuthService())
+export const userService = new UserService(getUserRepository())
+export const getUserService = () => new UserService(getUserRepository())

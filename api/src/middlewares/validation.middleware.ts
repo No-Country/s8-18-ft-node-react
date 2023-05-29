@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { AnyZodObject, ZodError } from 'zod'
+import { ValidationError } from '../errors/validation.error'
 
 export const validate =
   (extractFrom: 'body' | 'params' | 'query', schema: AnyZodObject) =>
@@ -22,11 +23,6 @@ export const validate =
       return next()
     } catch (error) {
       const e = error as ZodError
-      //  console.log(e.issues)
-      return res.status(400).json({
-        validationErrors: e.issues.map((error) => ({
-          message: error.message,
-        })),
-      })
+      return next(new ValidationError(e))
     }
   }
