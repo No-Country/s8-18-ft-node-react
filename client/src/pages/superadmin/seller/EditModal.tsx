@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react'
-import { BoxModal } from '../../components/ui'
+import { BoxModal } from '../../../components/ui/BoxModal'
 
 interface FormData {
   id: string;

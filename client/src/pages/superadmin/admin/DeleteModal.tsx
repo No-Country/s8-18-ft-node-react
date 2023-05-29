@@ -1,4 +1,5 @@
-import { BoxModal } from '../../components/ui'
+import { BoxModal } from '../../../components/ui/BoxModal'
+
 
 
 interface DeleteModalProps<T> {

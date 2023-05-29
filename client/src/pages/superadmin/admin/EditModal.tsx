@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react'
-import { BoxModal } from '../../components/ui'
+import React, { Dispatch, FC, SetStateAction, useState } from 'react'
+import { BoxModal } from '../../../components/ui/BoxModal'
 
 interface FormData {
   id: string;
@@ -10,13 +10,18 @@ interface FormData {
   value: string;
 }
 
-export const AddModal: FC = ({ setAddModal }) => {
+interface MyComponentProps {
+  setModalEdit: Dispatch<SetStateAction<boolean>>;
+  item: T;
+}
+
+export const EditModal: FC<MyComponentProps> = ({ setModalEdit, item }) => {
 
   const [formData, setFormData] = useState<FormData[]>([
-    { id: "name", label: "Nombre:", type: "text", name: "name", placeholder: "Ingrese un nombre", value: "" },
-    { id: "lastname", label: "Apellido:", type: "text", name: "lastname", placeholder: "Ingrese un apellido", value: "" },
-    { id: "email", label: "Correo electrónico:", type: "email", name: "email", placeholder: "Ingrese un correo electrónico", value: "" },
-    { id: "pasword", label: "Contraseña:", type: "text", name: "password", placeholder: "Ingrese una contraseña", value: "" },
+    { id: "name", label: "Nombre:", type: "text", name: "name", placeholder: "Ingrese un nombre", value: item.name },
+    { id: "lastname", label: "Apellido:", type: "text", name: "lastname", placeholder: "Ingrese un apellido", value: item.lastname },
+    { id: "email", label: "Correo electrónico:", type: "email", name: "email", placeholder: "Ingrese un correo electrónico", value: item.email },
+    { id: "pasword", label: "Contraseña:", type: "text", name: "password", placeholder: "Ingrese una contraseña", value: item.password },
     { id: "date", label: "Fecha:", type: "date", name: "date", placeholder: "Fecha", value: "" },
   ]);
 
@@ -27,37 +32,30 @@ export const AddModal: FC = ({ setAddModal }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formDataToSend = formData.reduce((acc, item) => {
-      return { ...acc, [item.name]: item.value };
-    }, {})
-    console.log(formDataToSend);
+    console.log(formData);
     try {
       const endpoint = 'https://test-api-nefw.onrender.com/users'; 
       const response = await fetch(endpoint, {
-       method: 'POST',
-        headers: {
-           'Content-Type': 'application/json',
-       },
-        body: JSON.stringify(formDataToSend),
+        method: 'POST',
+       headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
   
-     if (response.ok) {
-       const data = await response.json();
-       console.log('User created', data);
-     } else {
-       console.error('Error', response.statusText);
+      if (!response.ok) {
+        throw new Error('Error al enviar los datos');
       }
   
-      // Aquí puedes realizar las acciones que necesites después de enviar los datos
+      console.log('Datos enviados correctamente');
     } catch (error) {
-       console.error('Error:', error);
+      console.error('Error:', error);
     }
   }
 
   return (
     <>
-      <BoxModal title='Agregar cuenta de administrador'>
+      <BoxModal title='Editar cuenta de administrador'>
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex p-5">
           {formData.map((item) => (
 
@@ -104,12 +102,13 @@ export const AddModal: FC = ({ setAddModal }) => {
               <button
                 type='submit'
                 className="w-full mt-2 p-2.5 flex-1 text-white bg-[#35E871] rounded-md outline-none"
+                onClick={() => setModalEdit(false)}
               >
                 Guardar
               </button>
               <button
                 className="w-full mt-2 p-2.5 flex-1 text-white bg-[#ff0000] rounded-md outline-none"
-                onClick={() => setAddModal(false)}
+                onClick={() => setModalEdit(false)}
               >
                 Cancelar
               </button>
