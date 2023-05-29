@@ -3,12 +3,14 @@ module.exports = {
     node: true,
     commonjs: true,
     es2021: true,
+    jest: true,
   },
   extends: 'eslint:recommended',
   overrides: [],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
   },
   ignorePatterns: [
     '/database/config/config.js',
@@ -16,6 +18,7 @@ module.exports = {
     'package.json',
     'package-lock.json',
   ],
+  plugins: ['@typescript-eslint'],
   rules: {
     'no-unused-vars': [
       'warn',
@@ -25,13 +28,9 @@ module.exports = {
         ignoreRestSiblings: true,
       },
     ],
-    'padding-line-between-statements': [
-      'error',
-      { blankLine: 'any', prev: '*', next: '*' },
-    ],
-    indent: ['error', 2],
+    'padding-line-between-statements': ['error', { blankLine: 'any', prev: '*', next: '*' }],
     'linebreak-style': ['off', 'unix'],
     quotes: ['error', 'single'],
     semi: ['warn', 'never'],
   },
-};
+}
