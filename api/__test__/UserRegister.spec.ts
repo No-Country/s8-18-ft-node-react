@@ -78,7 +78,7 @@ describe('User registration', () => {
     expect(response.body.user.id).not.toBeUndefined()
     expect(response.body.user.email).not.toBeUndefined()
 
-    expect(Object.keys(response.body.user)).toEqual(['id', 'email'])
+    expect(Object.keys(response.body.user)).toEqual(['id', 'email', 'organizationId'])
   })
 
   // TODO: move this test to organization.spec
