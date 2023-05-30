@@ -30,7 +30,7 @@ const columns: Column<User>[] = [
   },
 ]
 
-const AdminList: FC = () => {
+export const SellerList: FC = () => {
   const [addModal, setAddModal] = useState(false)
   const [users, setUsers] = useState<User[]>([])
 
@@ -86,5 +86,3 @@ const AdminList: FC = () => {
     </>
   )
 }
-
-export default AdminList
