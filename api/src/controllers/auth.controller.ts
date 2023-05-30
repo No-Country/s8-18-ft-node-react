@@ -3,11 +3,16 @@ import dayjs from 'dayjs'
 
 import { getUserService } from '../services/user.service'
 import { AuthService } from '../services/auth.service'
+import { OrganizationService, createOrganizationService } from '../services/organization.service'
+
 import { Credentials } from '../interfaces'
 import { InvalidCredentialsError } from '../errors/auth.error'
 
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly organizationService: OrganizationService,
+  ) {}
   async signup(req: Request, res: Response) {
     const user = req.body
 
@@ -17,8 +22,14 @@ export class AuthController {
 
     try {
       const newUser = await this.authService.signup(user)
-      return res.send({ message: 'User registered', user: newUser })
+      const organizationRoles = await this.organizationService.create(newUser.id)
+
+      return res.send({
+        message: 'User registered',
+        user: { ...newUser, organizationId: organizationRoles.organization_id },
+      })
     } catch (e) {
+      console.log(e)
       return res.status(500).send({ message: 'Something goes wrong' })
     }
   }
@@ -44,5 +55,6 @@ export class AuthController {
 
 const userService = getUserService()
 const authService = new AuthService(userService)
+const organizationService = createOrganizationService()
 
-export const authController = new AuthController(authService)
+export const authController = new AuthController(authService, organizationService)

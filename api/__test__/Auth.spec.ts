@@ -22,7 +22,9 @@ const addUser = async () => {
 }
 
 const postAuthentication = async (credentials: { email: string; password: string }) => {
-  return await request(app).post(`${targetUri}/login`).send(credentials)
+  const agent = request.agent(app)
+
+  return await agent.post(`${targetUri}/login`).send(credentials)
 }
 
 beforeEach(async () => {
@@ -35,6 +37,14 @@ describe('Authentication', () => {
     const response = await postAuthentication({ email: 'auth@gmail.com', password: 'Password1234' })
 
     expect(response.status).toBe(200)
+  })
+
+  it('return http-only cookie with token', async () => {
+    await addUser()
+    const response = await postAuthentication({ email: 'auth@gmail.com', password: 'Password1234' })
+    const cookies = response.header['set-cookie']
+
+    expect(cookies).not.toBeUndefined()
   })
 
   it('returns only user id and username when login success', async () => {

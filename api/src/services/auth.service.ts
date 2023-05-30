@@ -62,3 +62,4 @@ export class AuthService {
 }
 
 export const authService = new AuthService(userService)
+export const createAuthService = (userService: UserService) => new AuthService(userService)
