@@ -2,13 +2,20 @@ import request from 'supertest'
 import app from '../src/app'
 import { getUserRepository } from '../src/repositories/user.repository'
 import { UserCreate } from '../src/interfaces'
+import { getOrganizationRepository } from '../src/repositories/organization.repository'
 
 const baseUri = process.env.API_URL || '/api/1.0'
 const targetUri = `${baseUri}/auth/signup`
 const userRepository = getUserRepository()
+const organizationRepository = getOrganizationRepository()
+
+// beforeAll(async () => {
+//   await db.initDB()
+// })
 
 beforeEach(async () => {
-  return await userRepository.deleteAll()
+  await organizationRepository.deleteAll()
+  await userRepository.deleteAll()
 })
 
 const validUser = {
@@ -26,6 +33,10 @@ describe('User registration', () => {
 
   const getUsers = async () => {
     return await userRepository.findAll()
+  }
+
+  const getUserOrganization = async (ownerId: string) => {
+    return await organizationRepository.findByOwner(ownerId)
   }
 
   it('returns 200 OK when signup request is valid', async () => {
@@ -67,7 +78,19 @@ describe('User registration', () => {
     expect(response.body.user.id).not.toBeUndefined()
     expect(response.body.user.email).not.toBeUndefined()
 
-    expect(Object.keys(response.body.user)).toEqual(['id', 'email'])
+    expect(Object.keys(response.body.user)).toEqual(['id', 'email', 'organizationId'])
+  })
+
+  // TODO: move this test to organization.spec
+  it('create an organization with user as superadmin when user is created ', async () => {
+    const response = await postValidUser()
+    const user = response.body.user
+    expect(user).not.toBeUndefined()
+    const organization = await getUserOrganization(user.id)
+
+    expect(organization).not.toBeUndefined()
+    expect(organization?.owner_id).toBe(user.id)
+    expect(organization?.organizationRoles[0].role).toBe('SUPERADMIN')
   })
 
   it('returns validationErrors in body when a validation error occurs', async () => {

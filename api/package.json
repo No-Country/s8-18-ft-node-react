@@ -12,7 +12,7 @@
     "db:push:test": "dotenv -e .env.test npx prisma db push",
     "docker:dev:up": "docker-compose -f ../docker-compose.dev.yaml up -d",
     "docker:dev:down": "docker-compose -f ../docker-compose.dev.yaml down",
-    "test:watch": "npm run docker:dev:up && dotenv -e .env.test -- npx prisma migrate dev && dotenv -e .env.test -- npx jest --watch --runInBand",
+    "test:watch": "npm run docker:dev:up && dotenv -e .env.test -- npx prisma db push && dotenv -e .env.test -- npx jest --watch --runInBand",
     "test": "dotenv -e .env.test -- npm run test:unit",
     "test:unit": "dotenv -e .env.test -- jest --coverage"
   },
