@@ -32,5 +32,8 @@
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@esbuild/win32-x64": "^0.17.19"
   }
 }
