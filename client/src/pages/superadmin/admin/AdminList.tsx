@@ -48,11 +48,11 @@ const AdminList: FC = () => {
   }, []);
 
   const handleEdit = (item: User) => {
-    onEdit(item);
+    //onEdit(item);
   };
   
   const handleDelete = (item: User) => {
-    onDelete(item);
+    //onDelete(item);
   };
 
   return (
