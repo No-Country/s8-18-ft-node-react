@@ -10,10 +10,11 @@ import { SalesTrend } from './SalesTrend'
 import { SalesPerProduct } from './SalesPerProduct'
 import { ProductProfitMargin } from './ProductProfitMargin'
 import { ReplenishmentTime } from './ReplenishmentTime'
+import { FC } from 'react'
 
-const Dashboard = () => {
+export const Dashboard: FC = () => {
   return (
-    <div className='my-10'>
+    <div>
       <div className="grid grid-cols-4 gap-5 mb-5">
         <BoxCard
           icon={<UserPlusIcon className="w-20" />}
@@ -65,5 +66,3 @@ const Dashboard = () => {
     </div>
   )
 }
-
-export default Dashboard
