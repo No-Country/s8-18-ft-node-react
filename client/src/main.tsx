@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { Home } from './pages/Home';
 
 import './index.css';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import { HomeSuperadmin } from './pages/superadmin/HomeSuperadmin';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <HomeSuperadmin />,
   },
   {
     path: '/login',
