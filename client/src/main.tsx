@@ -5,16 +5,23 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
 
-import { Home } from './pages/Home';
 
 import './index.css';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import { HomeSuperadmin } from './pages/superadmin/HomeSuperadmin';
+import { AdminAccount } from './pages/superadmin/admin/AdminAccount';
+import { SellerAccount } from './pages/superadmin/seller/SellerAccount';
+import { AuditPage } from './pages/superadmin/audit/AuditPage';
+import { Settings } from './pages/superadmin/settings/Settings';
+import { HomeAdmin } from './pages/admin/HomeAdmin';
 
-const router = createBrowserRouter([
+const role = true;
+
+const routes = [
   {
     path: '/',
-    element: <Home />,
+    element: role ? <HomeSuperadmin /> : <HomeAdmin />,
   },
   {
     path: '/login',
@@ -23,9 +30,27 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <Register />
+  },
+  {
+    path: 'admin-accounts',
+    element: <AdminAccount />
+  },
+  {
+    path: 'seller-accounts',
+    element: <SellerAccount />
+  },
+  {
+    path: 'audit-logs',
+    element: <AuditPage />
+  },
+  {
+    path: 'notifications',
+    element: <Settings />
   }
 
-]);
+];
+
+const router = createBrowserRouter(routes);
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
