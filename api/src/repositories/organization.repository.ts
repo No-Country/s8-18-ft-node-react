@@ -6,6 +6,7 @@ import { prisma } from '../config/db'
 import { Role } from '../auth'
 
 type OrganizationWithRoles = Organizations & { organizationRoles: OrganizationRoles[] }
+type withUser<T> = T & { user: Users }
 
 export interface OrganizationRepository {
   create: (userId: string) => Promise<OrganizationRoles>
@@ -16,6 +17,7 @@ export interface OrganizationRepository {
   ) => Promise<
     (OrganizationRoles & { user: { email: string; first_name: string; last_name: string } })[]
   >
+  deleteUser: (organizationId: string, userId: string) => Promise<withUser<OrganizationRoles>>
   deleteAll: () => Promise<void>
 }
 
@@ -28,15 +30,28 @@ class PostgresOrganizationRepository implements OrganizationRepository {
   }
 
   async addUser(organizationId: string, userId: string, role: Role) {
-    const addedRole = prisma.organizationRoles.create({
+    const addedRole = await prisma.organizationRoles.create({
       data: { organization_id: organizationId, user_id: userId, role },
     })
 
     return addedRole
   }
 
+  async deleteUser(organizationId: string, userId: string) {
+    return await prisma.organizationRoles.delete({
+      where: {
+        oneRolePerOrganization: {
+          user_id: userId,
+          organization_id: organizationId,
+        },
+      },
+      include: {
+        user: true,
+      },
+    })
+  }
+
   async findAllOrganizationUsers(organizationId: string) {
-    console.log(organizationId)
     return await prisma.organizationRoles.findMany({
       where: {
         organization_id: organizationId,

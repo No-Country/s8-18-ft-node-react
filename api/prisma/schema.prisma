@@ -27,6 +27,7 @@ model Organizations {
   owner             Users               @relation(fields: [owner_id], references: [id], onDelete: Cascade)
   owner_id          String
   organizationRoles OrganizationRoles[]
+  Inventories       Inventories[]
 }
 
 enum Role {
@@ -37,11 +38,46 @@ enum Role {
 
 model OrganizationRoles {
   id              String        @id @default(uuid()) @db.VarChar(36)
+  createdAt       DateTime      @default(now())
+  updateAt        DateTime      @updatedAt
   organization    Organizations @relation(fields: [organization_id], references: [id], onDelete: Cascade)
   organization_id String
   role            Role
   user            Users         @relation(fields: [user_id], references: [id])
   user_id         String
+  Inventories     Inventories[]
 
   @@unique([user_id, organization_id], name: "oneRolePerOrganization")
+}
+
+model Inventories {
+  id              String              @id @default(uuid()) @db.VarChar(36)
+  createdAt       DateTime            @default(now())
+  updateAt        DateTime            @updatedAt
+  organization    Organizations       @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  organization_id String
+  name            String              @db.VarChar(400)
+  admins          OrganizationRoles[]
+  Stock           Stocks[]
+}
+
+model Stocks {
+  id           String      @id @default(uuid()) @db.VarChar(36)
+  createdAt    DateTime    @default(now())
+  updateAt     DateTime    @updatedAt
+  inventory    Inventories @relation(fields: [inventory_id], references: [id])
+  inventory_id String
+  product      Products    @relation(fields: [product_id], references: [id])
+  product_id   String
+  quantity     Int
+}
+
+model Products {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  name        String   @db.VarChar(255)
+  description String   @db.VarChar(400)
+  barcode     String   @db.VarChar(255)
+  Stocks      Stocks[]
 }

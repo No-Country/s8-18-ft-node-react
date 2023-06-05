@@ -25,6 +25,15 @@ export class OrganizationService {
       role: result.role,
     }))
   }
+
+  async deleteUser(organizationId: string, userId: string) {
+    const { user: deletedUser } = await this.organizationRepository.deleteUser(
+      organizationId,
+      userId,
+    )
+
+    return deletedUser
+  }
 }
 
 export const organizationService = new OrganizationService(getOrganizationRepository())
