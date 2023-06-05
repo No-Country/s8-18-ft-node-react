@@ -10,11 +10,15 @@ import { HomeSuperadmin } from './pages/superadmin/HomeSuperadmin';
 import { AdminAccount } from './pages/superadmin/admin/AdminAccount';
 import { SellerAccount } from './pages/superadmin/seller/SellerAccount';
 import { AuditPage } from './pages/superadmin/audit/AuditPage';
+import { Settings } from './pages/superadmin/settings/Settings';
+import { HomeAdmin } from './pages/admin/HomeAdmin';
 
-const router = createBrowserRouter([
+const role = true;
+
+const routes = [
   {
     path: '/',
-    element: <HomeSuperadmin />,
+    element: role ? <HomeSuperadmin /> : <HomeAdmin />,
   },
   {
     path: '/login',
@@ -35,9 +39,15 @@ const router = createBrowserRouter([
   {
     path: 'audit-logs',
     element: <AuditPage />
+  },
+  {
+    path: 'notifications',
+    element: <Settings />
   }
 
-]);
+];
+
+const router = createBrowserRouter(routes);
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
