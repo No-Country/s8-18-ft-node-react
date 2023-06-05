@@ -15,7 +15,7 @@ import { FC } from 'react'
 export const Dashboard: FC = () => {
   return (
     <div>
-      <div className="grid grid-cols-4 gap-5 mb-5">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 mb-5">
         <BoxCard
           icon={<UserPlusIcon className="w-20" />}
           title="Vendedores activos"
@@ -41,7 +41,7 @@ export const Dashboard: FC = () => {
           className="from-[#234B99] to-[#24DFEB]"
         />
       </div>
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
         <BoxStats title="Tendencia de ventas">
           <div className="my-5">
             <SalesTrend />

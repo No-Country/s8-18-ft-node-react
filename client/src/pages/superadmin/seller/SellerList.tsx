@@ -62,7 +62,7 @@ export const SellerList: FC = () => {
     <>
       <section className="min-w-full pb-5 shadow-lg rounded-lg">
         <div className="bg-[#ececec] flex justify-between py-2 px-5 rounded-t-lg">
-          <p className="font-semibold text-[#606060]">Cuentas de administradores</p>
+          <p className="font-semibold text-[#606060]">Cuentas de vendedores</p>
           <ArrowsPointingOutIcon className="h-6 w-6" />
         </div>
         <button
