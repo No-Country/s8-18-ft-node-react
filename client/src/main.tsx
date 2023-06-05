@@ -7,6 +7,9 @@ import './index.css';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import { HomeSuperadmin } from './pages/superadmin/HomeSuperadmin';
+import { AdminAccount } from './pages/superadmin/admin/AdminAccount';
+import { SellerAccount } from './pages/superadmin/seller/SellerAccount';
+import { AuditPage } from './pages/superadmin/audit/AuditPage';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +23,18 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <Register />
+  },
+  {
+    path: 'admin-accounts',
+    element: <AdminAccount />
+  },
+  {
+    path: 'seller-accounts',
+    element: <SellerAccount />
+  },
+  {
+    path: 'audit-logs',
+    element: <AuditPage />
   }
 
 ]);
