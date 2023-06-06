@@ -18,3 +18,22 @@ export class InvalidCredentialsError extends CustomError {
     ]
   }
 }
+
+export class NotAuthorized extends CustomError {
+  statusCode = 403
+  reason = 'Insufficient Permissions'
+
+  constructor() {
+    super('Insufficient Permissions')
+
+    Object.setPrototypeOf(this, InvalidCredentialsError.prototype)
+  }
+
+  serializeErrors() {
+    return [
+      {
+        message: this.reason,
+      },
+    ]
+  }
+}
