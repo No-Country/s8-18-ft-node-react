@@ -26,6 +26,8 @@ export class OrganizationService {
     }))
   }
 
+  async changeRole(organizationId: string, userId: string) {}
+
   async deleteUser(organizationId: string, userId: string) {
     const { user: deletedUser } = await this.organizationRepository.deleteUser(
       organizationId,

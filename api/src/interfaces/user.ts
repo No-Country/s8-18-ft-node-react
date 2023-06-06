@@ -16,6 +16,7 @@ export interface AuthUser {
   email: string
   phone: number
   role: Role
+  organizationId: string
 }
 
 export interface UserCreate {

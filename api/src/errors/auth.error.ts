@@ -19,6 +19,25 @@ export class InvalidCredentialsError extends CustomError {
   }
 }
 
+export class UserNotFound extends CustomError {
+  statusCode = 404
+  reason = 'User not found'
+
+  constructor() {
+    super('User not found')
+
+    Object.setPrototypeOf(this, UserNotFound.prototype)
+  }
+
+  serializeErrors() {
+    return [
+      {
+        message: this.reason,
+      },
+    ]
+  }
+}
+
 export class NotAuthorized extends CustomError {
   statusCode = 403
   reason = 'Insufficient Permissions'
@@ -26,7 +45,7 @@ export class NotAuthorized extends CustomError {
   constructor() {
     super('Insufficient Permissions')
 
-    Object.setPrototypeOf(this, InvalidCredentialsError.prototype)
+    Object.setPrototypeOf(this, NotAuthorized.prototype)
   }
 
   serializeErrors() {

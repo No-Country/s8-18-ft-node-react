@@ -1,4 +1,4 @@
-export { User, UserCreate } from './user'
+export { User, UserCreate, AuthUser } from './user'
 export { Credentials } from './auth'
 export { RoleCreate } from './role'
-export { ProductCreate, ProductUpdate } from './product'
+export { ProductCreate, ProductUpdate, StockAdd } from './product'

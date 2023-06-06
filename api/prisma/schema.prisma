@@ -28,6 +28,7 @@ model Organizations {
   owner_id          String
   organizationRoles OrganizationRoles[]
   Inventories       Inventories[]
+  Products          Products[]
 }
 
 enum Role {
@@ -43,7 +44,7 @@ model OrganizationRoles {
   organization    Organizations @relation(fields: [organization_id], references: [id], onDelete: Cascade)
   organization_id String
   role            Role
-  user            Users         @relation(fields: [user_id], references: [id])
+  user            Users         @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id         String
   Inventories     Inventories[]
 
@@ -58,26 +59,32 @@ model Inventories {
   organization_id String
   name            String              @db.VarChar(400)
   admins          OrganizationRoles[]
-  Stock           Stocks[]
 }
 
 model Stocks {
-  id           String      @id @default(uuid()) @db.VarChar(36)
-  createdAt    DateTime    @default(now())
-  updateAt     DateTime    @updatedAt
-  inventory    Inventories @relation(fields: [inventory_id], references: [id])
-  inventory_id String
-  product      Products    @relation(fields: [product_id], references: [id])
-  product_id   String
-  quantity     Int
+  id         String    @id @default(uuid()) @db.VarChar(36)
+  createdAt  DateTime  @default(now())
+  updateAt   DateTime  @updatedAt
+  product    Products  @relation(fields: [product_id], references: [id])
+  product_id String
+  condition  Condition
+  quantity   Int
+}
+
+enum Condition {
+  USADO
+  NUEVO
 }
 
 model Products {
-  id          String   @id @default(uuid()) @db.VarChar(36)
-  createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
-  name        String   @db.VarChar(255)
-  description String   @db.VarChar(400)
-  barcode     String   @db.VarChar(255)
-  Stocks      Stocks[]
+  id              String        @id @default(uuid()) @db.VarChar(36)
+  createdAt       DateTime      @default(now())
+  updateAt        DateTime      @updatedAt
+  name            String        @db.VarChar(255)
+  description     String        @db.VarChar(400)
+  barcode         String        @db.VarChar(255)
+  brand           String        @db.VarChar(255)
+  Stocks          Stocks[]
+  organization    Organizations @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  organization_id String
 }

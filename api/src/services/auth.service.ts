@@ -41,7 +41,10 @@ export class AuthService {
       return null
     }
 
-    const userWithRole = { ...userData, role: 'superadmin' }
+    const role = await this.userService.getRole(user.id)
+    const organizationId = await this.userService.getOrganization(user.id)
+
+    const userWithRole: AuthUser = { ...userData, role, organizationId }
 
     // TODO: sign and add token
     const token = await this.signToken(userWithRole)

@@ -21,18 +21,7 @@ export default () => {
         passReqToCallback: true,
       },
       async function (req: Request, jwtPayload: any, done: any) {
-        return userRepository
-          .findOne({ id: jwtPayload.id })
-          .then(async (user) => {
-            if (user) {
-              done(null, user)
-            } else {
-              done(null, null)
-            }
-          })
-          .catch((err) => {
-            return done(err)
-          })
+        return done(null, jwtPayload)
       },
     ),
   )

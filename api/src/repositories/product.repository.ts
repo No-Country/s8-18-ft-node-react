@@ -5,15 +5,21 @@ import { Products } from '@prisma/client'
 import { ProductCreate, ProductUpdate } from '../interfaces'
 
 export interface ProductRepository {
-  create: (productCreate: ProductCreate) => Promise<Products>
+  create: (
+    organizationId: string,
+    productCreate: Omit<ProductCreate, 'quantity'>,
+  ) => Promise<Products>
   remove: (productId: string) => Promise<Products>
   update: (productUpdate: ProductUpdate) => Promise<Products>
   findAll: (organizationId: string) => Promise<Products[]>
 }
 
 export class PostgresProductRepository implements ProductRepository {
-  async create(productCreate: ProductCreate) {
-    return await prisma.products.create({ data: productCreate })
+  async create(organizationId: string, productCreate: Omit<ProductCreate, 'quantity'>) {
+    console.log(organizationId)
+    return await prisma.products.create({
+      data: { organization_id: organizationId, ...productCreate },
+    })
   }
 
   async remove(productId: string) {
@@ -25,7 +31,15 @@ export class PostgresProductRepository implements ProductRepository {
   }
 
   async findAll(organizationId: string) {
-    return await prisma.products.findMany({})
+    console.log(organizationId)
+    return await prisma.products.findMany({
+      where: {
+        organization_id: organizationId,
+      },
+      include: {
+        Stocks: true,
+      },
+    })
   }
 
   async update(productUpdate: ProductUpdate) {
@@ -39,7 +53,7 @@ export class PostgresProductRepository implements ProductRepository {
   }
 }
 
-export const getUserRepository = () => {
+export const getProductRepository = () => {
   switch (config.database) {
     case 'postgres':
       return new PostgresProductRepository()
