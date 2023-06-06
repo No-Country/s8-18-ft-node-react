@@ -12,6 +12,9 @@ import { SellerAccount } from './pages/superadmin/seller/SellerAccount';
 import { AuditPage } from './pages/superadmin/audit/AuditPage';
 import { Settings } from './pages/superadmin/settings/Settings';
 import { HomeAdmin } from './pages/admin/HomeAdmin';
+import { ProductPage } from './pages/admin/products/ProductPage';
+import { SupplierAccount } from './pages/admin/suppliers/SupplierAccount';
+import { SupplierProducts } from './pages/admin/supplier-products/SupplierProducts';
 
 const role = false;
 
@@ -43,6 +46,18 @@ const routes = [
   {
     path: 'notifications',
     element: <Settings />
+  },
+  {
+    path: 'products-list',
+    element: <ProductPage />
+  },
+  {
+    path: 'supplier-list',
+    element: <SupplierAccount />
+  },
+  {
+    path: "supplier-list/",
+    element: <SupplierProducts />
   }
 
 ];

@@ -1,14 +1,14 @@
 import { FC } from 'react'
-import { Layout } from './dashboard/layout/Layout'
-import { Dashboard } from './dashboard/Dashboard'
+import { Layout } from '../dashboard/layout/Layout'
+import { ProductList } from './ProductList'
 
-export const HomeAdmin: FC = () => {
+export const ProductPage: FC = () => {
   return (
     <Layout
       title={'InventoryApp'}
       description={'Best inventory management app in the whole universe'}
     >
-      <Dashboard />
+      <ProductList />
     </Layout>
   )
 }
