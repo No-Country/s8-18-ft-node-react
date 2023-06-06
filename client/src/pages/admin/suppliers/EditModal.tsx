@@ -107,7 +107,7 @@ export const EditModal: FC<MyComponentProps> = ({ setModalEdit, item }) => {
 
   return (
     <>
-      <BoxModal title='Editar cuenta de administrador'>
+      <BoxModal title='Editar proveedor'>
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex p-5">
           {formData.map((item) => (
 
