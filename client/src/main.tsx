@@ -56,7 +56,7 @@ const routes = [
     element: <SupplierAccount />
   },
   {
-    path: "supplier-list/",
+    path: "supplier-products/",
     element: <SupplierProducts />
   }
 
