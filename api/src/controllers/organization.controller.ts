@@ -31,18 +31,20 @@ export class OrganizationController {
     }
   }
 
-  async listUsers(req: Request, res: Response, next: NextFunction) {
+  async listUsers(req: Request, res: Response) {
     const { id: organizationId } = req.params
 
-    try {
-      // TODO: add exceptions!
-      const users = await this.organizationService.listOrganizationUsers(organizationId)
+    const users = await this.organizationService.listOrganizationUsers(organizationId)
 
-      return res.status(200).send(users)
-    } catch (e) {
-      console.log(e)
-      return res.status(500).send({ message: 'Something goes wrong' })
-    }
+    return res.status(200).send(users)
+  }
+
+  async deleteUser(req: Request, res: Response) {
+    const { id: organizationId, userId: userId } = req.params
+
+    const deletedUser = await this.organizationService.deleteUser(organizationId, userId)
+
+    return res.status(200).send({ message: 'User Deleted', user: deletedUser })
   }
 }
 

@@ -20,26 +20,21 @@ export class AuthController {
       return res.status(400).send({ message: 'Invalid Request' })
     }
 
-    try {
-      const newUser = await this.authService.signup(user)
-      const organizationRoles = await this.organizationService.create(newUser.id)
+    const newUser = await this.authService.signup(user)
+    const organizationRoles = await this.organizationService.create(newUser.id)
 
-      return res.send({
-        message: 'User registered',
-        user: { ...newUser, organizationId: organizationRoles.organization_id },
-      })
-    } catch (e) {
-      console.log(e)
-      return res.status(500).send({ message: 'Something goes wrong' })
-    }
+    return res.send({
+      message: 'User registered',
+      user: { ...newUser, organizationId: organizationRoles.organization_id },
+    })
   }
 
-  async login(req: Request, res: Response, next: NextFunction) {
+  async login(req: Request, res: Response) {
     const credentials: Credentials = req.body
 
     const loginSuccess = await this.authService.login(credentials)
 
-    if (!loginSuccess) return next(new InvalidCredentialsError())
+    if (!loginSuccess) throw new InvalidCredentialsError()
 
     const { user, token } = loginSuccess
 
@@ -50,6 +45,12 @@ export class AuthController {
     })
 
     return res.send({ message: 'User authenticated', user })
+  }
+
+  async logOut(req: Request, res: Response) {
+    res.clearCookie('api-auth')
+
+    return res.status(200).json({ message: 'Logged Out' })
   }
 }
 

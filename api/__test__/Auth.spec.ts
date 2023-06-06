@@ -18,7 +18,8 @@ const user = {
 }
 
 const addUser = async () => {
-  return await authService.signup(user)
+  const response = await request(app).post(`${targetUri}/signup`).send(user)
+  return response.body.user
 }
 
 const postAuthentication = async (credentials: { email: string; password: string }) => {
@@ -35,6 +36,7 @@ describe('Authentication', () => {
   it('returns 200 when credentials are correct', async () => {
     await addUser()
     const response = await postAuthentication({ email: 'auth@gmail.com', password: 'Password1234' })
+    // console.log(response)
 
     expect(response.status).toBe(200)
   })
@@ -60,6 +62,7 @@ describe('Authentication', () => {
       'lastName',
       'phone',
       'role',
+      'organizationId',
     ])
   })
 

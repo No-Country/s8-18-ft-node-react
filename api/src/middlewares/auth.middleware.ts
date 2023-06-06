@@ -6,6 +6,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
     if (!user) {
       return next(null)
     }
+    console.log(user)
     req.user = user
     next()
   })(req, res, next)
