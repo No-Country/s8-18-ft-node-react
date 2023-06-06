@@ -5,20 +5,27 @@ import { Products } from '@prisma/client'
 import { ProductCreate, ProductUpdate } from '../interfaces'
 
 export interface ProductRepository {
-  create: (productCreate: ProductCreate) => Products
+  create: (productCreate: ProductCreate) => Promise<Products>
+  remove: (productId: string) => Promise<Products>
+  update: (productUpdate: ProductUpdate) => Promise<Products>
+  findAll: (organizationId: string) => Promise<Products[]>
 }
 
-export class PostgresProductRepository {
+export class PostgresProductRepository implements ProductRepository {
   async create(productCreate: ProductCreate) {
     return await prisma.products.create({ data: productCreate })
   }
 
-  async delete(productId: string) {
+  async remove(productId: string) {
     return await prisma.products.delete({
       where: {
         id: productId,
       },
     })
+  }
+
+  async findAll(organizationId: string) {
+    return await prisma.products.findMany({})
   }
 
   async update(productUpdate: ProductUpdate) {
