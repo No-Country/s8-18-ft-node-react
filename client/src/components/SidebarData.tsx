@@ -12,11 +12,11 @@ const SidebarData: FC<PropsWithChildren<Props>> = ({toggle}) => {
         return (
           <div
             className={`${
-              toggle ? "last:w-[3.6rem]" : "last:w-[17rem]"
+              toggle ? "last:w-[0.5rem]" : "last:w-[0.5rem]"
             } sidebar last:absolute left-4 bottom-4`}
             key={data.id}
           >
-            <div className="mr-8 text-[1.7rem] text-brown">{data.icon}</div>
+            <div className="m-5 text-[8.7rem] text-brown">{data.icon}</div>
             <div
               className={`${
                 toggle ? "opacity-0 delay-200" : ""

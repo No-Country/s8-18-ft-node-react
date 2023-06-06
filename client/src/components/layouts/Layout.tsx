@@ -1,28 +1,25 @@
-import { FC, PropsWithChildren } from 'react';
-import { Helmet } from 'react-helmet';
-import { Drawer } from '../Drawer/Drawer';
+import { FC, PropsWithChildren } from 'react'
+import { Helmet } from 'react-helmet'
+import { Drawer } from '../Drawer/Drawer'
 
 interface Props {
-  title: string;
-  description: string;
+  children: React.ReactNode
+  title?: string
 }
 
-const Layout: FC<PropsWithChildren<Props>> = ({ title, description, children }) => {
+const Layout: FC<PropsWithChildren<Props>> = ({ title, children }) => {
   return (
     <>
-      <Helmet title={title} meta={[{ name: 'description', content: description }]} />
-      <div className='flex'>
-        <div className='w-full'>
+      <Helmet title={title} meta={[{ name: 'description', content: 'description' }]} />
+      <div className="flex">
+        <div className="w-full">
           <header>
-            <Drawer>
-              {children}
-          </Drawer>
+            <Drawer>{children}</Drawer>
           </header>
-          
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-
-
-
 import './index.css';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
@@ -15,13 +12,14 @@ import { SellerAccount } from './pages/superadmin/seller/SellerAccount';
 import { AuditPage } from './pages/superadmin/audit/AuditPage';
 import { Settings } from './pages/superadmin/settings/Settings';
 import { HomeAdmin } from './pages/admin/HomeAdmin';
+import { Home } from './pages/Home';
 
 const role = true;
 
 const routes = [
   {
     path: '/',
-    element: role ? <HomeSuperadmin /> : <HomeAdmin />,
+    element: <Home />,
   },
   {
     path: '/login',

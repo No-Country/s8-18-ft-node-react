@@ -1,9 +1,11 @@
 // src/components/Login.tsx
-import React from 'react'
+import React, {useState} from 'react'
 import { Link, useNavigate  } from 'react-router-dom'
 type SubmitHandler = (event: React.MouseEvent<HTMLButtonElement>) => void;
 
 const Login: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   //manjear login a ruta home en caso de que email = admi@ y passwor=admin
   const handleSubmit: SubmitHandler = (event) => {
@@ -11,13 +13,12 @@ const Login: React.FC = () => {
     event.preventDefault();
     // Aquí puedes manejar la lógica para procesar el envío del formulario
     // verificate form
-    // if (email === 'admin' && password === 'admin') {
-    //   navigate('/home')
-    // } else {
-    //   alert('Usuario o contraseña incorrecta')
-    // }
-    
+    if (email === 'admin@email.com' && password === 'admin') {
     navigate('/')
+    } else {
+    alert('Usuario o contraseña incorrecta')
+    }
+    
   };
   
 
@@ -54,7 +55,8 @@ const Login: React.FC = () => {
                   autoComplete="email"
                   placeholder="Ingrese su correo electrónico"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 bg-gray-100 text-gray-600 shadow-sm ring-1 ring-inset placeholder:text-placehoder-login focus:ring-2 focus:ring-inset focus:ring-red
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="block w-full rounded-md border-0 p-2 bg-gray-100 text-gray-600 shadow-sm ring-1 ring-inset placeholder:text-placehoder-login focus:ring-2 focus:ring-inset focus:ring-red
                   -600 sm:text-sm sm:leading-6 "
                 />
               </div>
@@ -82,7 +84,8 @@ const Login: React.FC = () => {
                   placeholder='Ingrese su contraseña'
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 bg-gray-100 text-gray-600 shadow-sm ring-1 ring-inset placeholder:text-placehoder-login focus:ring-2 focus:ring-inset focus:ring-red
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full rounded-md border-0 p-2 bg-gray-100 text-gray-600 shadow-sm ring-1 ring-inset placeholder:text-placehoder-login focus:ring-2 focus:ring-inset focus:ring-red
                   -600 sm:text-sm sm:leading-6"
                 />
               </div>

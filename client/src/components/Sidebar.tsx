@@ -8,11 +8,11 @@ import UserProfile from "./UserProfile";
 const Sidebar = () => {
   const [toggle, setToggle] = useState(false);
   return (
-    <div className={`${toggle ? "w-[5.8rem]" : ""} sidebar-container`}>
-      <UserProfile toggle={toggle} />
+    <div className={`${toggle ? "w-[1rem]" : ""} sidebar-container`}>
+      
       <SidebarData toggle={toggle} />
       <div
-        className="absolute top-[7rem] flex justify-center items-center -left-5 w-10 h-10 bg-glass rounded-full cursor-pointer"
+        className="absolute top-[7rem] flex justify-center items-center -left-5 w-2 h-2 bg-glass rounded-full cursor-pointer"
         onClick={() => {
           setToggle(!toggle);
         }}
