@@ -9,17 +9,18 @@ export interface ProductCreate {
   condition?: string
 }
 
-export interface ProductUpdate extends Partial<ProductCreate> {
+export interface ProductUpdate extends ProductCreate {
   id: string
 }
 
 export interface StockAdd {
   productId: string
-  quantity: string
+  quantity: number
   condition: Condition
 }
 
 export interface StockUpdate {
   id: string
   quantity: number
+  condition: Condition
 }

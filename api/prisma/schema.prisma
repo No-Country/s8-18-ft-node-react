@@ -65,10 +65,12 @@ model Stocks {
   id         String    @id @default(uuid()) @db.VarChar(36)
   createdAt  DateTime  @default(now())
   updateAt   DateTime  @updatedAt
-  product    Products  @relation(fields: [product_id], references: [id])
+  product    Products  @relation(fields: [product_id], references: [id], onDelete: Cascade)
   product_id String
   condition  Condition
   quantity   Int
+
+  @@unique([product_id, condition], name: "oneProductCondition")
 }
 
 enum Condition {

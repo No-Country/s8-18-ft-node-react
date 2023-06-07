@@ -10,6 +10,8 @@ type withUser<T> = T & { user: Users }
 
 export interface OrganizationRepository {
   create: (userId: string) => Promise<OrganizationRoles>
+  exists: (organizationId: string) => Promise<boolean>
+  getRole: (organizationId: string, userId: string) => Promise<OrganizationRoles | null>
   addUser: (organizationId: string, userId: string, role: Role) => Promise<OrganizationRoles>
   findByOwner: (ownerId: string) => Promise<OrganizationWithRoles | null>
   findAllOrganizationUsers: (
@@ -26,6 +28,25 @@ class PostgresOrganizationRepository implements OrganizationRepository {
     const organization = await prisma.organizations.create({ data: { owner_id: userId } })
     return await prisma.organizationRoles.create({
       data: { organization_id: organization.id, user_id: userId, role: Role.SUPERADMIN },
+    })
+  }
+
+  async exists(organizationId: string) {
+    const organization = await prisma.organizations.findFirst({
+      where: {
+        id: organizationId,
+      },
+    })
+
+    return !!organization
+  }
+
+  async getRole(organizationId: string, userId: string) {
+    return await prisma.organizationRoles.findFirst({
+      where: {
+        organization_id: organizationId,
+        user_id: userId,
+      },
     })
   }
 

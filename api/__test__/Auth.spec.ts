@@ -36,7 +36,6 @@ describe('Authentication', () => {
   it('returns 200 when credentials are correct', async () => {
     await addUser()
     const response = await postAuthentication({ email: 'auth@gmail.com', password: 'Password1234' })
-    // console.log(response)
 
     expect(response.status).toBe(200)
   })
