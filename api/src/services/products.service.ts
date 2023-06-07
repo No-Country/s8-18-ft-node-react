@@ -5,6 +5,7 @@ import { Role } from '../auth'
 import { NotAuthorized } from '../errors/auth.error'
 
 import { ProductCreate, AuthUser, StockAdd } from '../interfaces'
+import { ProductUpdate, StockUpdate } from '../interfaces/product'
 
 export class ProductService {
   constructor(
@@ -12,12 +13,8 @@ export class ProductService {
     private readonly stocksRepository: StockRepository,
   ) {}
 
-  async create(user: AuthUser, organizationId: string, productCreate: ProductCreate) {
+  async create(organizationId: string, productCreate: ProductCreate) {
     const { quantity, ...productFields } = productCreate
-
-    if (user.role !== Role.ADMIN && user.role !== Role.SUPERADMIN) {
-      throw new NotAuthorized()
-    }
 
     const newProduct = await this.productRepository.create(organizationId, productFields)
 
@@ -28,7 +25,17 @@ export class ProductService {
     return newProduct
   }
 
-  async addStock(organizationId: string, addStock: StockAdd) {}
+  async remove(productId: string) {
+    return await this.productRepository.remove(productId)
+  }
+
+  async update(productUpdate: ProductUpdate) {
+    return await this.productRepository.update(productUpdate)
+  }
+
+  async updateStock(stockUpdate: StockUpdate) {
+    return await this.stocksRepository.updateStock(stockUpdate)
+  }
 
   async listProducts(organizationId: string) {
     return await this.productRepository.findAll(organizationId)
