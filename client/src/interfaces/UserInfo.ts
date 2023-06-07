@@ -1,9 +1,18 @@
+export interface role  {
+  name: 'ADMIN' | 'SUPERADMIN' | 'VENDEDOR' | null
+}
+
 export interface UserInfo {
   id: number;
-  name: string;
+  firtsName: string;
+  lastName: string;
+  email: string;
+  phone: number;
+  password: string;
+  role: role;
+}
+
+export interface UserLogin {
   email: string;
   password: string;
-  role: string;
-  avatar: string;
-  status:string
 }

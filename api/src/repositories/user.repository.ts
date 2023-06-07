@@ -1,7 +1,7 @@
 import { config } from '../config'
 
 import { prisma } from '../config/db'
-import { Users } from '@prisma/client'
+import { Role, Users } from '@prisma/client'
 
 import { User, UserCreate } from '../interfaces'
 import { UserSearch } from '../interfaces/user'
@@ -10,6 +10,8 @@ export interface UserRepository {
   findAll: () => Promise<User[]>
   create: (userCreate: UserCreate) => Promise<Users>
   findOne: (userSearch: UserSearch) => Promise<User | null>
+  getRole: (userId: string) => Promise<Role | undefined>
+  getOrganizationId: (userId: string) => Promise<string | undefined>
   deleteAll: () => Promise<void>
 }
 
@@ -43,6 +45,22 @@ export class PostgresUserRepository implements UserRepository {
     if (!user) return user
 
     return this.cleanUser(user)
+  }
+
+  async getRole(userId: string) {
+    const role = await prisma.organizationRoles.findFirst({
+      where: { user_id: userId },
+    })
+
+    return role?.role
+  }
+
+  async getOrganizationId(userId: string) {
+    const role = await prisma.organizationRoles.findFirst({
+      where: { user_id: userId },
+    })
+
+    return role?.organization_id
   }
 
   async deleteAll() {

@@ -1,6 +1,7 @@
 import { UserRepository, getUserRepository } from '../repositories/user.repository'
 
 import { UserCreate } from '../interfaces/user'
+import { UserNotFound } from '../errors/auth.error'
 
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
@@ -19,6 +20,24 @@ export class UserService {
   async emailIsAvailable(email: string) {
     const user = await this.userRepository.findOne({ email })
     return !user
+  }
+
+  async getRole(userId: string) {
+    const role = await this.userRepository.getRole(userId)
+    if (!role) {
+      throw new UserNotFound()
+    }
+
+    return role
+  }
+
+  async getOrganization(userId: string) {
+    const organizationId = await this.userRepository.getOrganizationId(userId)
+    if (!organizationId) {
+      throw new UserNotFound()
+    }
+
+    return organizationId
   }
 }
 

@@ -1,4 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express'
+
+import { errorLayer } from '../controllers'
 import { organizationController } from '../controllers/organization.controller'
 
 import { validate } from '../middlewares/validation.middleware'
@@ -16,7 +18,13 @@ router.post(
 router.get(
   '/organizations/:id/users',
   validate('params', organizationSchemas.organizationId),
-  organizationController.listUsers.bind(organizationController),
+  errorLayer(organizationController.listUsers.bind(organizationController)),
+)
+
+router.delete(
+  '/organizations/:id/users/:userId/delete',
+  validate('params', organizationSchemas.userDeleteParams),
+  errorLayer(organizationController.deleteUser.bind(organizationController)),
 )
 
 export default router

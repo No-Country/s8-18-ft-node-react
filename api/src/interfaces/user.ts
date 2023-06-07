@@ -1,3 +1,5 @@
+import { Role } from '../auth'
+
 export interface User {
   id: string
   firstName: string
@@ -13,6 +15,8 @@ export interface AuthUser {
   lastName: string
   email: string
   phone: number
+  role: Role
+  organizationId: string
 }
 
 export interface UserCreate {
