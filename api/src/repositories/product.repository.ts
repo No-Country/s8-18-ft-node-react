@@ -16,7 +16,6 @@ export interface ProductRepository {
 
 export class PostgresProductRepository implements ProductRepository {
   async create(organizationId: string, productCreate: Omit<ProductCreate, 'quantity'>) {
-    console.log(organizationId)
     return await prisma.products.create({
       data: { organization_id: organizationId, ...productCreate },
     })
@@ -31,7 +30,6 @@ export class PostgresProductRepository implements ProductRepository {
   }
 
   async findAll(organizationId: string) {
-    console.log(organizationId)
     return await prisma.products.findMany({
       where: {
         organization_id: organizationId,

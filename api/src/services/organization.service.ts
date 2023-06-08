@@ -17,6 +17,10 @@ export class OrganizationService {
     return await this.organizationRepository.addUser(organizationId, userId, role)
   }
 
+  async exists(organizationId: string) {
+    return await this.organizationRepository.exists(organizationId)
+  }
+
   async listOrganizationUsers(organizationId: string) {
     const users = await this.organizationRepository.findAllOrganizationUsers(organizationId)
 
@@ -35,6 +39,10 @@ export class OrganizationService {
     )
 
     return deletedUser
+  }
+
+  async getRole(organizationId: string, userId: string) {
+    return await this.organizationRepository.getRole(organizationId, userId)
   }
 }
 

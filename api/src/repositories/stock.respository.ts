@@ -5,21 +5,27 @@ import { Condition, Products, Stocks } from '@prisma/client'
 import { StockUpdate } from '../interfaces/product'
 
 export interface StockRepository {
-  addStock: (productId: string, inventoryId: string, stock: number) => Promise<Stocks>
+  addStock: (
+    productId: string,
+    inventoryId: string,
+    quantity: number,
+    condition?: Condition,
+  ) => Promise<Stocks>
   remove: (stockId: string) => Promise<Stocks>
   updateStock: (stockUpdate: StockUpdate) => Promise<Stocks>
   findAll: (organizationId: string) => Promise<Stocks[]>
+  findOneBy: (conditions: { [key: string]: any }) => Promise<Stocks | null>
 }
 
 export class PostgresStockRepository implements StockRepository {
   async addStock(
     productId: string,
     organizationId: string,
-    stock: number,
+    quantity: number,
     condition: Condition = Condition.NUEVO,
   ) {
     return await prisma.stocks.create({
-      data: { product_id: productId, quantity: stock, condition },
+      data: { product_id: productId, quantity, condition },
     })
   }
 
@@ -44,9 +50,16 @@ export class PostgresStockRepository implements StockRepository {
     })
   }
 
+  async findOneBy(conditions: { [key: string]: any }) {
+    return await prisma.stocks.findFirst({
+      where: conditions,
+    })
+  }
+
   async updateStock(stockUpdate: StockUpdate) {
+    console.log(stockUpdate)
     return await prisma.stocks.update({
-      data: { quantity: stockUpdate.quantity },
+      data: { quantity: stockUpdate.quantity, condition: stockUpdate.condition },
       where: {
         id: stockUpdate.id,
       },

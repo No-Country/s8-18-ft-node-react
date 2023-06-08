@@ -12,13 +12,11 @@ export class ProductsController {
     const { id: organizationId } = req.params
     const user = req.user as AuthUser
 
-    console.log('organization: ', organizationId)
-
     if (!user) throw new NotAuthorized()
 
     const product = req.body
 
-    const newProduct = await this.productService.create(user, organizationId, product)
+    const newProduct = await this.productService.create(organizationId, product)
 
     return res.status(200).json(newProduct)
   }
@@ -29,6 +27,32 @@ export class ProductsController {
     const products = await this.productService.listProducts(organizationId)
 
     return res.status(200).json(products)
+  }
+
+  async updateStock(req: Request, res: Response) {
+    const { id: organizationId, stockId } = req.params
+    const stockUpdate = req.body
+
+    const stock = await this.productService.updateStock({ id: stockId, ...stockUpdate })
+
+    return res.status(200).json({ message: 'Stock Updated', stock })
+  }
+
+  async updateProduct(req: Request, res: Response) {
+    const { productId } = req.params
+    const productUpdate = req.body
+
+    const updateProduct = await this.productService.update({ id: productId, ...productUpdate })
+
+    return res.status(200).json({ message: 'Product Update', product: updateProduct })
+  }
+
+  async deleteProduct(req: Request, res: Response) {
+    const { productId } = req.params
+
+    const product = await this.productService.remove(productId)
+
+    return await res.status(200).json({ message: 'Product Deleted', product: product })
   }
 }
 
